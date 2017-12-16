@@ -28,6 +28,7 @@ namespace WTG.Analyzers.Test
 	[TestFixture(TypeArgs = new[] { typeof(NullComparisonAnalyzer), typeof(NullComparisonCodeFixProvider) })]
 	[TestFixture(TypeArgs = new[] { typeof(CompletedTaskAnalyzer), typeof(CompletedTaskCodeFixProvider) })]
 	[TestFixture(TypeArgs = new[] { typeof(CodeContractsAnalyzer), typeof(CodeContractsCodeFixProvider) })]
+	[TestFixture(TypeArgs = new[] { typeof(EmitAnalyzer), typeof(EmitCodeFixProvider) })]
 	class AnalyzerAndCodeFixTest<TAnalyzer, TCodeFix>
 		where TAnalyzer : DiagnosticAnalyzer, new()
 		where TCodeFix : CodeFixProvider, new()
@@ -75,10 +76,18 @@ namespace WTG.Analyzers.Test
 		[Test]
 		public async Task BulkUpdate([ValueSource(nameof(Samples))] SampleDataSet data)
 		{
+			var codeFixProvider = new TCodeFix();
+
+			if (codeFixProvider.GetFixAllProvider() == null)
+			{
+				// Does not support bulk fixing.
+				return;
+			}
+
 			var analyzer = new TAnalyzer();
 			var diagnostics = await DiagnosticUtils.GetDiagnosticsAsync(analyzer, data.Source).ConfigureAwait(false);
 
-			var fixer = new CodeFixer(analyzer, new TCodeFix());
+			var fixer = new CodeFixer(analyzer, codeFixProvider);
 			fixer.DiagnosticFilter = CreateFilter(data);
 			await fixer.VerifyBulkFixAsync(data.Source, data.Result).ConfigureAwait(false);
 		}
