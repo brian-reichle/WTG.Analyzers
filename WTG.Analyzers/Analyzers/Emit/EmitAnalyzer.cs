@@ -37,7 +37,7 @@ namespace WTG.Analyzers
 				return;
 			}
 
-			var opCodeSymbol = context.SemanticModel.GetSymbolInfo(fieldIdentifier).Symbol;
+			var opCodeSymbol = context.SemanticModel.GetSymbolInfo(fieldIdentifier, context.CancellationToken).Symbol;
 
 			if (opCodeSymbol == null || opCodeSymbol.Kind != SymbolKind.Field)
 			{

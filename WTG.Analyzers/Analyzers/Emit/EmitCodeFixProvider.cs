@@ -25,9 +25,9 @@ namespace WTG.Analyzers
 			var invoke = (InvocationExpressionSyntax)root.FindNode(diagnostic.Location.SourceSpan, getInnermostNodeForTie: true);
 			var data = new Data(document, root, invoke);
 
-			var compilation = await document.Project.GetCompilationAsync().ConfigureAwait(false);
+			var compilation = await document.Project.GetCompilationAsync(context.CancellationToken).ConfigureAwait(false);
 
-			var suggestedFix = GetSuggestedFix(compilation, invoke);
+			var suggestedFix = GetSuggestedFix(compilation, invoke, context.CancellationToken);
 
 			switch (suggestedFix)
 			{
@@ -51,10 +51,10 @@ namespace WTG.Analyzers
 			}
 		}
 
-		static SuggestedFix GetSuggestedFix(Compilation compilation, InvocationExpressionSyntax invoke)
+		static SuggestedFix GetSuggestedFix(Compilation compilation, InvocationExpressionSyntax invoke, CancellationToken cancellationToken)
 		{
 			var model = compilation.GetSemanticModel(invoke.SyntaxTree);
-			var invokeSymbol = model.GetSymbolInfo(invoke).Symbol;
+			var invokeSymbol = model.GetSymbolInfo(invoke, cancellationToken).Symbol;
 
 			if (invokeSymbol == null && invokeSymbol.Kind == SymbolKind.Method)
 			{
