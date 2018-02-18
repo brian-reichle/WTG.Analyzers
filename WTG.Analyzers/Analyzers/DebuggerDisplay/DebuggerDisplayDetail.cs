@@ -50,6 +50,11 @@ namespace WTG.Analyzers
 					i += NextChar(expression);
 					builder.Add(expression);
 
+					while (i < format.Length && char.IsWhiteSpace(format[i]))
+					{
+						i++;
+					}
+
 					if (i >= format.Length)
 					{
 						goto fail;
