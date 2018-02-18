@@ -31,12 +31,12 @@ namespace WTG.Analyzers
 		{
 			if (Visit(node.Expression))
 			{
-				var symbol = ddc.GetExpressionSymbolInfo(node).Symbol;
+				var symbolInfo = ddc.GetExpressionSymbolInfo(node);
 
-				if (symbol == null)
+				if (symbolInfo.Symbol == null)
 				{
-					var type = ddc.GetExpressionTypeInfo(node);
-					ReportMissingMember(node.Name.Identifier, type.Type.Name);
+					var type = ddc.GetExpressionTypeInfo(node.Expression);
+					ReportMissingMember(node.Name.Identifier, type.Type.MetadataName);
 					return false;
 				}
 			}
