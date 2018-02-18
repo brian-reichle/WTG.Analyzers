@@ -7,12 +7,7 @@ namespace WTG.Analyzers
 {
 	sealed class DebuggerDisplayDetail
 	{
-		DebuggerDisplayDetail(ImmutableArray<ExpressionSyntax> values)
-		{
-			Values = values;
-		}
-
-		DebuggerDisplayDetail(ImmutableArray<ExpressionSyntax> values, bool hasError)
+		DebuggerDisplayDetail(ImmutableArray<ExpressionSyntax> values, bool hasError = false)
 		{
 			Values = values;
 			HasError = hasError;
@@ -39,7 +34,7 @@ namespace WTG.Analyzers
 				{
 					if (++i >= format.Length)
 					{
-						goto fail;
+						return CreateFault(builder);
 					}
 					else if (format[i] == '{')
 					{
@@ -57,7 +52,7 @@ namespace WTG.Analyzers
 
 					if (i >= format.Length)
 					{
-						goto fail;
+						return CreateFault(builder);
 					}
 					else if (format[i] == '}')
 					{
@@ -65,7 +60,7 @@ namespace WTG.Analyzers
 					}
 					else if (i + 3 >= format.Length || string.Compare(format, i, ",nq}", 0, 4, StringComparison.Ordinal) != 0)
 					{
-						goto fail;
+						return CreateFault(builder);
 					}
 
 					i += 4;
@@ -74,7 +69,7 @@ namespace WTG.Analyzers
 				{
 					if (++i >= format.Length || format[i] != '}')
 					{
-						goto fail;
+						return CreateFault(builder);
 					}
 				}
 
@@ -84,8 +79,7 @@ next:
 
 			return new DebuggerDisplayDetail(builder.ToImmutable());
 
-fail:
-			return new DebuggerDisplayDetail(builder.ToImmutable(), true);
+			DebuggerDisplayDetail CreateFault(ImmutableArray<ExpressionSyntax>.Builder b) => new DebuggerDisplayDetail(b.ToImmutable(), true);
 		}
 
 		static int NextChar(ExpressionSyntax expression) => expression.GetLocation().SourceSpan.End;
