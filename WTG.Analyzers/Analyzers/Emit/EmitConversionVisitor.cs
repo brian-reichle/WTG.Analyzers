@@ -3,30 +3,24 @@ using System.Globalization;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Simplification;
 using WTG.Analyzers.Utils;
 
 namespace WTG.Analyzers
 {
-	sealed class ConversionVisitor : CSharpSyntaxVisitor<ExpressionSyntax>
+	sealed class EmitConversionVisitor : CSharpSyntaxVisitor<ExpressionSyntax>
 	{
-		public ConversionVisitor(OpCodeOperand operandType)
+		public EmitConversionVisitor(OpCodeOperand operandType)
 		{
 			this.operandType = operandType;
 		}
 
 		public override ExpressionSyntax DefaultVisit(SyntaxNode node)
 		{
-			var type = GetCastType();
-			var expression = (ExpressionSyntax)node;
-
-			var precidence = expression.Kind().GetPrecidence();
-
-			if (precidence < Precidence.Unary)
-			{
-				expression = SyntaxFactory.ParenthesizedExpression(expression);
-			}
-
-			return SyntaxFactory.CastExpression(type, expression);
+			return SyntaxFactory.CastExpression(
+				GetCastType(),
+				SyntaxFactory.ParenthesizedExpression((ExpressionSyntax)node)
+					.WithAdditionalAnnotations(Simplifier.Annotation));
 		}
 
 		public override ExpressionSyntax VisitLiteralExpression(LiteralExpressionSyntax node)

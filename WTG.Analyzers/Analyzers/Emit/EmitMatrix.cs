@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Reflection.Emit;
 using Microsoft.CodeAnalysis;
@@ -9,7 +8,6 @@ namespace WTG.Analyzers
 {
 	partial class EmitMatrix
 	{
-		[SuppressMessage("Microsoft.Maintainability", "CA1502")]
 		public static EmitMethod GetEmitMethod(IMethodSymbol method)
 		{
 			if (method.ContainingType.IsMatch("System.Reflection.Emit.ILGenerator"))

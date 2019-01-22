@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using WTG.Analyzers.Utils;
 
 namespace WTG.Analyzers
 {
@@ -64,7 +65,7 @@ namespace WTG.Analyzers
 					Diagnostic.Create(
 						Rules.UseCorrectEmitOverload_NoneRule,
 						invoke.GetLocation(),
-						opcode.ToString()));
+						opCodeSymbol.Name));
 			}
 			else
 			{
@@ -72,17 +73,17 @@ namespace WTG.Analyzers
 					Diagnostic.Create(
 						Rules.UseCorrectEmitOverloadRule,
 						invoke.GetLocation(),
-						opcode.ToString()));
+						opCodeSymbol.Name));
 			}
 		}
 
-		static EmitMethod IdentifyEmitMethod(SemanticModel model, InvocationExpressionSyntax invoke, CancellationToken token)
+		static EmitMethod IdentifyEmitMethod(SemanticModel model, InvocationExpressionSyntax invoke, CancellationToken cancellationToken)
 		{
-			var name = invoke.Expression.Accept(EmitMethodNameRetriever.Instance);
+			var name = ExpressionHelper.GetMethodName(invoke)?.Identifier.Text;
 
 			if (name == nameof(ILGenerator.Emit) || name == nameof(ILGenerator.EmitCall))
 			{
-				var methodSymbol = (IMethodSymbol)model.GetSymbolInfo(invoke, token).Symbol;
+				var methodSymbol = (IMethodSymbol)model.GetSymbolInfo(invoke, cancellationToken).Symbol;
 
 				if (methodSymbol != null)
 				{

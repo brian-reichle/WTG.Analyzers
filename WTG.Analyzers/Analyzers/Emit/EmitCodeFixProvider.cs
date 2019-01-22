@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace WTG.Analyzers
 {
-	[ExportCodeFixProvider(LanguageNames.CSharp, Name = "EmitCodeFixProvider")]
+	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(EmitCodeFixProvider))]
 	public sealed class EmitCodeFixProvider : CodeFixProvider
 	{
 		public override ImmutableArray<string> FixableDiagnosticIds { get; } = ImmutableArray.Create(
@@ -71,7 +71,7 @@ namespace WTG.Analyzers
 
 			var opcode = EmitMatrix.GetOpCode(field.Identifier.Text);
 			var actualMethod = EmitMatrix.GetEmitMethod((IMethodSymbol)invokeSymbol);
-			return EmitFixUtils.SuggestAutoFix(opcode, actualMethod);
+			return SuggestAutoFix(opcode, actualMethod);
 		}
 
 		static SyntaxNode RemoveArgument(InvocationExpressionSyntax invoke)
@@ -120,7 +120,51 @@ namespace WTG.Analyzers
 						argList.Arguments.Replace(
 							valueArgument,
 							valueArgument.WithExpression(
-								valueExpression.Accept(new ConversionVisitor(opcode.GetOperand()))))));
+								valueExpression.Accept(new EmitConversionVisitor(opcode.GetOperand()))))));
+		}
+
+		static SuggestedFix SuggestAutoFix(OpCode opcode, EmitMethod actualMethod)
+		{
+			var operandType = opcode.GetOperand();
+
+			switch (operandType)
+			{
+				case OpCodeOperand.InlineNone:
+					return SuggestedFix.DeleteArgument;
+
+				case OpCodeOperand.InlineI:
+				case OpCodeOperand.InlineI8:
+				case OpCodeOperand.InlineR:
+				case OpCodeOperand.InlineVar:
+				case OpCodeOperand.ShortInlineI:
+				case OpCodeOperand.ShortInlineR:
+				case OpCodeOperand.ShortInlineVar:
+					{
+						const EmitMethod Mask =
+							EmitMethod.Emit_Byte
+							| EmitMethod.Emit_SByte
+							| EmitMethod.Emit_Int16
+							| EmitMethod.Emit_Int32
+							| EmitMethod.Emit_Int64
+							| EmitMethod.Emit_Single
+							| EmitMethod.Emit_Double;
+
+						if ((Mask & actualMethod) != 0)
+						{
+							return SuggestedFix.ConvertArgument;
+						}
+					}
+					break;
+			}
+
+			return SuggestedFix.NoAutoFix;
+		}
+
+		enum SuggestedFix
+		{
+			NoAutoFix,
+			DeleteArgument,
+			ConvertArgument,
 		}
 
 		sealed class Data

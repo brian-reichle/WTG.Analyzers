@@ -1,11 +1,9 @@
 using System;
-using System.CodeDom.Compiler;
 using Microsoft.CodeAnalysis;
 using WTG.Analyzers.Utils;
 
 namespace WTG.Analyzers
 {
-	[GeneratedCode("EmitMatrix", "1.0")]
 	enum OpCodeOperand
 	{
 		Invalid = 0,
@@ -28,1138 +26,7 @@ namespace WTG.Analyzers
 		ShortInlineVar = 17,
 	}
 
-	[GeneratedCode("EmitMatrix", "1.0")]
-	enum SimpleOpCode
-	{
-		Invalid = 0,
-		#region InlineBrTarget
-
-		/// <summary>
-		/// beq
-		/// </summary>
-		Beq = 1,
-
-		/// <summary>
-		/// bge
-		/// </summary>
-		Bge = 2,
-
-		/// <summary>
-		/// bge.un
-		/// </summary>
-		Bge_Un = 3,
-
-		/// <summary>
-		/// bgt
-		/// </summary>
-		Bgt = 4,
-
-		/// <summary>
-		/// bgt.un
-		/// </summary>
-		Bgt_Un = 5,
-
-		/// <summary>
-		/// ble
-		/// </summary>
-		Ble = 6,
-
-		/// <summary>
-		/// ble.un
-		/// </summary>
-		Ble_Un = 7,
-
-		/// <summary>
-		/// blt
-		/// </summary>
-		Blt = 8,
-
-		/// <summary>
-		/// blt.un
-		/// </summary>
-		Blt_Un = 9,
-
-		/// <summary>
-		/// bne.un
-		/// </summary>
-		Bne_Un = 10,
-
-		/// <summary>
-		/// br
-		/// </summary>
-		Br = 11,
-
-		/// <summary>
-		/// brfalse
-		/// </summary>
-		Brfalse = 12,
-
-		/// <summary>
-		/// brtrue
-		/// </summary>
-		Brtrue = 13,
-
-		/// <summary>
-		/// leave
-		/// </summary>
-		Leave = 14,
-		#endregion
-		#region InlineField
-
-		/// <summary>
-		/// ldfld
-		/// </summary>
-		Ldfld = 15,
-
-		/// <summary>
-		/// ldflda
-		/// </summary>
-		Ldflda = 16,
-
-		/// <summary>
-		/// ldsfld
-		/// </summary>
-		Ldsfld = 17,
-
-		/// <summary>
-		/// ldsflda
-		/// </summary>
-		Ldsflda = 18,
-
-		/// <summary>
-		/// stfld
-		/// </summary>
-		Stfld = 19,
-
-		/// <summary>
-		/// stsfld
-		/// </summary>
-		Stsfld = 20,
-		#endregion
-		#region InlineI
-
-		/// <summary>
-		/// ldc.i4
-		/// </summary>
-		Ldc_I4 = 21,
-		#endregion
-		#region InlineI8
-
-		/// <summary>
-		/// ldc.i8
-		/// </summary>
-		Ldc_I8 = 22,
-		#endregion
-		#region InlineMethod
-
-		/// <summary>
-		/// call
-		/// </summary>
-		Call = 23,
-
-		/// <summary>
-		/// callvirt
-		/// </summary>
-		Callvirt = 24,
-
-		/// <summary>
-		/// jmp
-		/// </summary>
-		Jmp = 25,
-
-		/// <summary>
-		/// ldftn
-		/// </summary>
-		Ldftn = 26,
-
-		/// <summary>
-		/// ldvirtftn
-		/// </summary>
-		Ldvirtftn = 27,
-
-		/// <summary>
-		/// newobj
-		/// </summary>
-		Newobj = 28,
-		#endregion
-		#region InlineNone
-
-		/// <summary>
-		/// add
-		/// </summary>
-		Add = 29,
-
-		/// <summary>
-		/// add.ovf
-		/// </summary>
-		Add_Ovf = 30,
-
-		/// <summary>
-		/// add.ovf.un
-		/// </summary>
-		Add_Ovf_Un = 31,
-
-		/// <summary>
-		/// and
-		/// </summary>
-		And = 32,
-
-		/// <summary>
-		/// arglist
-		/// </summary>
-		Arglist = 33,
-
-		/// <summary>
-		/// break
-		/// </summary>
-		Break = 34,
-
-		/// <summary>
-		/// ceq
-		/// </summary>
-		Ceq = 35,
-
-		/// <summary>
-		/// cgt
-		/// </summary>
-		Cgt = 36,
-
-		/// <summary>
-		/// cgt.un
-		/// </summary>
-		Cgt_Un = 37,
-
-		/// <summary>
-		/// ckfinite
-		/// </summary>
-		Ckfinite = 38,
-
-		/// <summary>
-		/// clt
-		/// </summary>
-		Clt = 39,
-
-		/// <summary>
-		/// clt.un
-		/// </summary>
-		Clt_Un = 40,
-
-		/// <summary>
-		/// conv.i
-		/// </summary>
-		Conv_I = 41,
-
-		/// <summary>
-		/// conv.i1
-		/// </summary>
-		Conv_I1 = 42,
-
-		/// <summary>
-		/// conv.i2
-		/// </summary>
-		Conv_I2 = 43,
-
-		/// <summary>
-		/// conv.i4
-		/// </summary>
-		Conv_I4 = 44,
-
-		/// <summary>
-		/// conv.i8
-		/// </summary>
-		Conv_I8 = 45,
-
-		/// <summary>
-		/// conv.ovf.i
-		/// </summary>
-		Conv_Ovf_I = 46,
-
-		/// <summary>
-		/// conv.ovf.i.un
-		/// </summary>
-		Conv_Ovf_I_Un = 47,
-
-		/// <summary>
-		/// conv.ovf.i1
-		/// </summary>
-		Conv_Ovf_I1 = 48,
-
-		/// <summary>
-		/// conv.ovf.i1.un
-		/// </summary>
-		Conv_Ovf_I1_Un = 49,
-
-		/// <summary>
-		/// conv.ovf.i2
-		/// </summary>
-		Conv_Ovf_I2 = 50,
-
-		/// <summary>
-		/// conv.ovf.i2.un
-		/// </summary>
-		Conv_Ovf_I2_Un = 51,
-
-		/// <summary>
-		/// conv.ovf.i4
-		/// </summary>
-		Conv_Ovf_I4 = 52,
-
-		/// <summary>
-		/// conv.ovf.i4.un
-		/// </summary>
-		Conv_Ovf_I4_Un = 53,
-
-		/// <summary>
-		/// conv.ovf.i8
-		/// </summary>
-		Conv_Ovf_I8 = 54,
-
-		/// <summary>
-		/// conv.ovf.i8.un
-		/// </summary>
-		Conv_Ovf_I8_Un = 55,
-
-		/// <summary>
-		/// conv.ovf.u
-		/// </summary>
-		Conv_Ovf_U = 56,
-
-		/// <summary>
-		/// conv.ovf.u.un
-		/// </summary>
-		Conv_Ovf_U_Un = 57,
-
-		/// <summary>
-		/// conv.ovf.u1
-		/// </summary>
-		Conv_Ovf_U1 = 58,
-
-		/// <summary>
-		/// conv.ovf.u1.un
-		/// </summary>
-		Conv_Ovf_U1_Un = 59,
-
-		/// <summary>
-		/// conv.ovf.u2
-		/// </summary>
-		Conv_Ovf_U2 = 60,
-
-		/// <summary>
-		/// conv.ovf.u2.un
-		/// </summary>
-		Conv_Ovf_U2_Un = 61,
-
-		/// <summary>
-		/// conv.ovf.u4
-		/// </summary>
-		Conv_Ovf_U4 = 62,
-
-		/// <summary>
-		/// conv.ovf.u4.un
-		/// </summary>
-		Conv_Ovf_U4_Un = 63,
-
-		/// <summary>
-		/// conv.ovf.u8
-		/// </summary>
-		Conv_Ovf_U8 = 64,
-
-		/// <summary>
-		/// conv.ovf.u8.un
-		/// </summary>
-		Conv_Ovf_U8_Un = 65,
-
-		/// <summary>
-		/// conv.r.un
-		/// </summary>
-		Conv_R_Un = 66,
-
-		/// <summary>
-		/// conv.r4
-		/// </summary>
-		Conv_R4 = 67,
-
-		/// <summary>
-		/// conv.r8
-		/// </summary>
-		Conv_R8 = 68,
-
-		/// <summary>
-		/// conv.u
-		/// </summary>
-		Conv_U = 69,
-
-		/// <summary>
-		/// conv.u1
-		/// </summary>
-		Conv_U1 = 70,
-
-		/// <summary>
-		/// conv.u2
-		/// </summary>
-		Conv_U2 = 71,
-
-		/// <summary>
-		/// conv.u4
-		/// </summary>
-		Conv_U4 = 72,
-
-		/// <summary>
-		/// conv.u8
-		/// </summary>
-		Conv_U8 = 73,
-
-		/// <summary>
-		/// cpblk
-		/// </summary>
-		Cpblk = 74,
-
-		/// <summary>
-		/// div
-		/// </summary>
-		Div = 75,
-
-		/// <summary>
-		/// div.un
-		/// </summary>
-		Div_Un = 76,
-
-		/// <summary>
-		/// dup
-		/// </summary>
-		Dup = 77,
-
-		/// <summary>
-		/// endfilter
-		/// </summary>
-		Endfilter = 78,
-
-		/// <summary>
-		/// endfinally
-		/// </summary>
-		Endfinally = 79,
-
-		/// <summary>
-		/// initblk
-		/// </summary>
-		Initblk = 80,
-
-		/// <summary>
-		/// ldarg.0
-		/// </summary>
-		Ldarg_0 = 81,
-
-		/// <summary>
-		/// ldarg.1
-		/// </summary>
-		Ldarg_1 = 82,
-
-		/// <summary>
-		/// ldarg.2
-		/// </summary>
-		Ldarg_2 = 83,
-
-		/// <summary>
-		/// ldarg.3
-		/// </summary>
-		Ldarg_3 = 84,
-
-		/// <summary>
-		/// ldc.i4.0
-		/// </summary>
-		Ldc_I4_0 = 85,
-
-		/// <summary>
-		/// ldc.i4.1
-		/// </summary>
-		Ldc_I4_1 = 86,
-
-		/// <summary>
-		/// ldc.i4.2
-		/// </summary>
-		Ldc_I4_2 = 87,
-
-		/// <summary>
-		/// ldc.i4.3
-		/// </summary>
-		Ldc_I4_3 = 88,
-
-		/// <summary>
-		/// ldc.i4.4
-		/// </summary>
-		Ldc_I4_4 = 89,
-
-		/// <summary>
-		/// ldc.i4.5
-		/// </summary>
-		Ldc_I4_5 = 90,
-
-		/// <summary>
-		/// ldc.i4.6
-		/// </summary>
-		Ldc_I4_6 = 91,
-
-		/// <summary>
-		/// ldc.i4.7
-		/// </summary>
-		Ldc_I4_7 = 92,
-
-		/// <summary>
-		/// ldc.i4.8
-		/// </summary>
-		Ldc_I4_8 = 93,
-
-		/// <summary>
-		/// ldc.i4.m1
-		/// </summary>
-		Ldc_I4_M1 = 94,
-
-		/// <summary>
-		/// ldelem.i
-		/// </summary>
-		Ldelem_I = 95,
-
-		/// <summary>
-		/// ldelem.i1
-		/// </summary>
-		Ldelem_I1 = 96,
-
-		/// <summary>
-		/// ldelem.i2
-		/// </summary>
-		Ldelem_I2 = 97,
-
-		/// <summary>
-		/// ldelem.i4
-		/// </summary>
-		Ldelem_I4 = 98,
-
-		/// <summary>
-		/// ldelem.i8
-		/// </summary>
-		Ldelem_I8 = 99,
-
-		/// <summary>
-		/// ldelem.r4
-		/// </summary>
-		Ldelem_R4 = 100,
-
-		/// <summary>
-		/// ldelem.r8
-		/// </summary>
-		Ldelem_R8 = 101,
-
-		/// <summary>
-		/// ldelem.ref
-		/// </summary>
-		Ldelem_Ref = 102,
-
-		/// <summary>
-		/// ldelem.u1
-		/// </summary>
-		Ldelem_U1 = 103,
-
-		/// <summary>
-		/// ldelem.u2
-		/// </summary>
-		Ldelem_U2 = 104,
-
-		/// <summary>
-		/// ldelem.u4
-		/// </summary>
-		Ldelem_U4 = 105,
-
-		/// <summary>
-		/// ldind.i
-		/// </summary>
-		Ldind_I = 106,
-
-		/// <summary>
-		/// ldind.i1
-		/// </summary>
-		Ldind_I1 = 107,
-
-		/// <summary>
-		/// ldind.i2
-		/// </summary>
-		Ldind_I2 = 108,
-
-		/// <summary>
-		/// ldind.i4
-		/// </summary>
-		Ldind_I4 = 109,
-
-		/// <summary>
-		/// ldind.i8
-		/// </summary>
-		Ldind_I8 = 110,
-
-		/// <summary>
-		/// ldind.r4
-		/// </summary>
-		Ldind_R4 = 111,
-
-		/// <summary>
-		/// ldind.r8
-		/// </summary>
-		Ldind_R8 = 112,
-
-		/// <summary>
-		/// ldind.ref
-		/// </summary>
-		Ldind_Ref = 113,
-
-		/// <summary>
-		/// ldind.u1
-		/// </summary>
-		Ldind_U1 = 114,
-
-		/// <summary>
-		/// ldind.u2
-		/// </summary>
-		Ldind_U2 = 115,
-
-		/// <summary>
-		/// ldind.u4
-		/// </summary>
-		Ldind_U4 = 116,
-
-		/// <summary>
-		/// ldlen
-		/// </summary>
-		Ldlen = 117,
-
-		/// <summary>
-		/// ldloc.0
-		/// </summary>
-		Ldloc_0 = 118,
-
-		/// <summary>
-		/// ldloc.1
-		/// </summary>
-		Ldloc_1 = 119,
-
-		/// <summary>
-		/// ldloc.2
-		/// </summary>
-		Ldloc_2 = 120,
-
-		/// <summary>
-		/// ldloc.3
-		/// </summary>
-		Ldloc_3 = 121,
-
-		/// <summary>
-		/// ldnull
-		/// </summary>
-		Ldnull = 122,
-
-		/// <summary>
-		/// localloc
-		/// </summary>
-		Localloc = 123,
-
-		/// <summary>
-		/// mul
-		/// </summary>
-		Mul = 124,
-
-		/// <summary>
-		/// mul.ovf
-		/// </summary>
-		Mul_Ovf = 125,
-
-		/// <summary>
-		/// mul.ovf.un
-		/// </summary>
-		Mul_Ovf_Un = 126,
-
-		/// <summary>
-		/// neg
-		/// </summary>
-		Neg = 127,
-
-		/// <summary>
-		/// nop
-		/// </summary>
-		Nop = 128,
-
-		/// <summary>
-		/// not
-		/// </summary>
-		Not = 129,
-
-		/// <summary>
-		/// or
-		/// </summary>
-		Or = 130,
-
-		/// <summary>
-		/// pop
-		/// </summary>
-		Pop = 131,
-
-		/// <summary>
-		/// readonly.
-		/// </summary>
-		Readonly = 132,
-
-		/// <summary>
-		/// refanytype
-		/// </summary>
-		Refanytype = 133,
-
-		/// <summary>
-		/// rem
-		/// </summary>
-		Rem = 134,
-
-		/// <summary>
-		/// rem.un
-		/// </summary>
-		Rem_Un = 135,
-
-		/// <summary>
-		/// ret
-		/// </summary>
-		Ret = 136,
-
-		/// <summary>
-		/// rethrow
-		/// </summary>
-		Rethrow = 137,
-
-		/// <summary>
-		/// shl
-		/// </summary>
-		Shl = 138,
-
-		/// <summary>
-		/// shr
-		/// </summary>
-		Shr = 139,
-
-		/// <summary>
-		/// shr.un
-		/// </summary>
-		Shr_Un = 140,
-
-		/// <summary>
-		/// stelem.i
-		/// </summary>
-		Stelem_I = 141,
-
-		/// <summary>
-		/// stelem.i1
-		/// </summary>
-		Stelem_I1 = 142,
-
-		/// <summary>
-		/// stelem.i2
-		/// </summary>
-		Stelem_I2 = 143,
-
-		/// <summary>
-		/// stelem.i4
-		/// </summary>
-		Stelem_I4 = 144,
-
-		/// <summary>
-		/// stelem.i8
-		/// </summary>
-		Stelem_I8 = 145,
-
-		/// <summary>
-		/// stelem.r4
-		/// </summary>
-		Stelem_R4 = 146,
-
-		/// <summary>
-		/// stelem.r8
-		/// </summary>
-		Stelem_R8 = 147,
-
-		/// <summary>
-		/// stelem.ref
-		/// </summary>
-		Stelem_Ref = 148,
-
-		/// <summary>
-		/// stind.i
-		/// </summary>
-		Stind_I = 149,
-
-		/// <summary>
-		/// stind.i1
-		/// </summary>
-		Stind_I1 = 150,
-
-		/// <summary>
-		/// stind.i2
-		/// </summary>
-		Stind_I2 = 151,
-
-		/// <summary>
-		/// stind.i4
-		/// </summary>
-		Stind_I4 = 152,
-
-		/// <summary>
-		/// stind.i8
-		/// </summary>
-		Stind_I8 = 153,
-
-		/// <summary>
-		/// stind.r4
-		/// </summary>
-		Stind_R4 = 154,
-
-		/// <summary>
-		/// stind.r8
-		/// </summary>
-		Stind_R8 = 155,
-
-		/// <summary>
-		/// stind.ref
-		/// </summary>
-		Stind_Ref = 156,
-
-		/// <summary>
-		/// stloc.0
-		/// </summary>
-		Stloc_0 = 157,
-
-		/// <summary>
-		/// stloc.1
-		/// </summary>
-		Stloc_1 = 158,
-
-		/// <summary>
-		/// stloc.2
-		/// </summary>
-		Stloc_2 = 159,
-
-		/// <summary>
-		/// stloc.3
-		/// </summary>
-		Stloc_3 = 160,
-
-		/// <summary>
-		/// sub
-		/// </summary>
-		Sub = 161,
-
-		/// <summary>
-		/// sub.ovf
-		/// </summary>
-		Sub_Ovf = 162,
-
-		/// <summary>
-		/// sub.ovf.un
-		/// </summary>
-		Sub_Ovf_Un = 163,
-
-		/// <summary>
-		/// tail.
-		/// </summary>
-		Tailcall = 164,
-
-		/// <summary>
-		/// throw
-		/// </summary>
-		Throw = 165,
-
-		/// <summary>
-		/// volatile.
-		/// </summary>
-		Volatile = 166,
-
-		/// <summary>
-		/// xor
-		/// </summary>
-		Xor = 167,
-		#endregion
-		#region InlineR
-
-		/// <summary>
-		/// ldc.r8
-		/// </summary>
-		Ldc_R8 = 168,
-		#endregion
-		#region InlineSig
-
-		/// <summary>
-		/// calli
-		/// </summary>
-		Calli = 169,
-		#endregion
-		#region InlineString
-
-		/// <summary>
-		/// ldstr
-		/// </summary>
-		Ldstr = 170,
-		#endregion
-		#region InlineSwitch
-
-		/// <summary>
-		/// switch
-		/// </summary>
-		Switch = 171,
-		#endregion
-		#region InlineTok
-
-		/// <summary>
-		/// ldtoken
-		/// </summary>
-		Ldtoken = 172,
-		#endregion
-		#region InlineType
-
-		/// <summary>
-		/// box
-		/// </summary>
-		Box = 173,
-
-		/// <summary>
-		/// castclass
-		/// </summary>
-		Castclass = 174,
-
-		/// <summary>
-		/// constrained.
-		/// </summary>
-		Constrained = 175,
-
-		/// <summary>
-		/// cpobj
-		/// </summary>
-		Cpobj = 176,
-
-		/// <summary>
-		/// initobj
-		/// </summary>
-		Initobj = 177,
-
-		/// <summary>
-		/// isinst
-		/// </summary>
-		Isinst = 178,
-
-		/// <summary>
-		/// ldelem
-		/// </summary>
-		Ldelem = 179,
-
-		/// <summary>
-		/// ldelema
-		/// </summary>
-		Ldelema = 180,
-
-		/// <summary>
-		/// ldobj
-		/// </summary>
-		Ldobj = 181,
-
-		/// <summary>
-		/// mkrefany
-		/// </summary>
-		Mkrefany = 182,
-
-		/// <summary>
-		/// newarr
-		/// </summary>
-		Newarr = 183,
-
-		/// <summary>
-		/// refanyval
-		/// </summary>
-		Refanyval = 184,
-
-		/// <summary>
-		/// sizeof
-		/// </summary>
-		Sizeof = 185,
-
-		/// <summary>
-		/// stelem
-		/// </summary>
-		Stelem = 186,
-
-		/// <summary>
-		/// stobj
-		/// </summary>
-		Stobj = 187,
-
-		/// <summary>
-		/// unbox
-		/// </summary>
-		Unbox = 188,
-
-		/// <summary>
-		/// unbox.any
-		/// </summary>
-		Unbox_Any = 189,
-		#endregion
-		#region InlineVar
-
-		/// <summary>
-		/// ldarg
-		/// </summary>
-		Ldarg = 190,
-
-		/// <summary>
-		/// ldarga
-		/// </summary>
-		Ldarga = 191,
-
-		/// <summary>
-		/// ldloc
-		/// </summary>
-		Ldloc = 192,
-
-		/// <summary>
-		/// ldloca
-		/// </summary>
-		Ldloca = 193,
-
-		/// <summary>
-		/// starg
-		/// </summary>
-		Starg = 194,
-
-		/// <summary>
-		/// stloc
-		/// </summary>
-		Stloc = 195,
-		#endregion
-		#region ShortInlineBrTarget
-
-		/// <summary>
-		/// beq.s
-		/// </summary>
-		Beq_S = 196,
-
-		/// <summary>
-		/// bge.s
-		/// </summary>
-		Bge_S = 197,
-
-		/// <summary>
-		/// bge.un.s
-		/// </summary>
-		Bge_Un_S = 198,
-
-		/// <summary>
-		/// bgt.s
-		/// </summary>
-		Bgt_S = 199,
-
-		/// <summary>
-		/// bgt.un.s
-		/// </summary>
-		Bgt_Un_S = 200,
-
-		/// <summary>
-		/// ble.s
-		/// </summary>
-		Ble_S = 201,
-
-		/// <summary>
-		/// ble.un.s
-		/// </summary>
-		Ble_Un_S = 202,
-
-		/// <summary>
-		/// blt.s
-		/// </summary>
-		Blt_S = 203,
-
-		/// <summary>
-		/// blt.un.s
-		/// </summary>
-		Blt_Un_S = 204,
-
-		/// <summary>
-		/// bne.un.s
-		/// </summary>
-		Bne_Un_S = 205,
-
-		/// <summary>
-		/// br.s
-		/// </summary>
-		Br_S = 206,
-
-		/// <summary>
-		/// brfalse.s
-		/// </summary>
-		Brfalse_S = 207,
-
-		/// <summary>
-		/// brtrue.s
-		/// </summary>
-		Brtrue_S = 208,
-
-		/// <summary>
-		/// leave.s
-		/// </summary>
-		Leave_S = 209,
-		#endregion
-		#region ShortInlineI
-
-		/// <summary>
-		/// ldc.i4.s
-		/// </summary>
-		Ldc_I4_S = 210,
-
-		/// <summary>
-		/// unaligned.
-		/// </summary>
-		Unaligned = 211,
-		#endregion
-		#region ShortInlineR
-
-		/// <summary>
-		/// ldc.r4
-		/// </summary>
-		Ldc_R4 = 212,
-		#endregion
-		#region ShortInlineVar
-
-		/// <summary>
-		/// ldarg.s
-		/// </summary>
-		Ldarg_S = 213,
-
-		/// <summary>
-		/// ldarga.s
-		/// </summary>
-		Ldarga_S = 214,
-
-		/// <summary>
-		/// ldloc.s
-		/// </summary>
-		Ldloc_S = 215,
-
-		/// <summary>
-		/// ldloca.s
-		/// </summary>
-		Ldloca_S = 216,
-
-		/// <summary>
-		/// starg.s
-		/// </summary>
-		Starg_S = 217,
-
-		/// <summary>
-		/// stloc.s
-		/// </summary>
-		Stloc_S = 218,
-		#endregion
-	}
-
 	[Flags]
-	[GeneratedCode("EmitMatrix", "1.0")]
 	enum EmitMethod
 	{
 		None = 0,
@@ -1184,7 +51,6 @@ namespace WTG.Analyzers
 		EmitCalli = 1 << 18,
 	}
 
-	[GeneratedCode("EmitMatrix", "1.0")]
 	enum OpCode
 	{
 		Invalid = 0,
@@ -1193,1585 +59,1362 @@ namespace WTG.Analyzers
 		/// <summary>
 		/// beq
 		/// </summary>
-		Beq = SimpleOpCode.Beq
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Beq = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bge
 		/// </summary>
-		Bge = SimpleOpCode.Bge
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bge = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bge.un
 		/// </summary>
-		Bge_Un = SimpleOpCode.Bge_Un
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bge_Un = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bgt
 		/// </summary>
-		Bgt = SimpleOpCode.Bgt
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bgt = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bgt.un
 		/// </summary>
-		Bgt_Un = SimpleOpCode.Bgt_Un
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bgt_Un = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// ble
 		/// </summary>
-		Ble = SimpleOpCode.Ble
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Ble = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// ble.un
 		/// </summary>
-		Ble_Un = SimpleOpCode.Ble_Un
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Ble_Un = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// blt
 		/// </summary>
-		Blt = SimpleOpCode.Blt
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Blt = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// blt.un
 		/// </summary>
-		Blt_Un = SimpleOpCode.Blt_Un
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Blt_Un = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bne.un
 		/// </summary>
-		Bne_Un = SimpleOpCode.Bne_Un
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bne_Un = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// br
 		/// </summary>
-		Br = SimpleOpCode.Br
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Br = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// brfalse
 		/// </summary>
-		Brfalse = SimpleOpCode.Brfalse
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Brfalse = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// brtrue
 		/// </summary>
-		Brtrue = SimpleOpCode.Brtrue
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Brtrue = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// leave
 		/// </summary>
-		Leave = SimpleOpCode.Leave
-			| (OpCodeOperand.InlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Leave = OpCodeOperand.InlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 		#endregion
 		#region InlineField
 
 		/// <summary>
 		/// ldfld
 		/// </summary>
-		Ldfld = SimpleOpCode.Ldfld
-			| (OpCodeOperand.InlineField << 8)
-			| (EmitMethod.Emit_FieldInfo << 13),
+		Ldfld = OpCodeOperand.InlineField
+			| (EmitMethod.Emit_FieldInfo << 5),
 
 		/// <summary>
 		/// ldflda
 		/// </summary>
-		Ldflda = SimpleOpCode.Ldflda
-			| (OpCodeOperand.InlineField << 8)
-			| (EmitMethod.Emit_FieldInfo << 13),
+		Ldflda = OpCodeOperand.InlineField
+			| (EmitMethod.Emit_FieldInfo << 5),
 
 		/// <summary>
 		/// ldsfld
 		/// </summary>
-		Ldsfld = SimpleOpCode.Ldsfld
-			| (OpCodeOperand.InlineField << 8)
-			| (EmitMethod.Emit_FieldInfo << 13),
+		Ldsfld = OpCodeOperand.InlineField
+			| (EmitMethod.Emit_FieldInfo << 5),
 
 		/// <summary>
 		/// ldsflda
 		/// </summary>
-		Ldsflda = SimpleOpCode.Ldsflda
-			| (OpCodeOperand.InlineField << 8)
-			| (EmitMethod.Emit_FieldInfo << 13),
+		Ldsflda = OpCodeOperand.InlineField
+			| (EmitMethod.Emit_FieldInfo << 5),
 
 		/// <summary>
 		/// stfld
 		/// </summary>
-		Stfld = SimpleOpCode.Stfld
-			| (OpCodeOperand.InlineField << 8)
-			| (EmitMethod.Emit_FieldInfo << 13),
+		Stfld = OpCodeOperand.InlineField
+			| (EmitMethod.Emit_FieldInfo << 5),
 
 		/// <summary>
 		/// stsfld
 		/// </summary>
-		Stsfld = SimpleOpCode.Stsfld
-			| (OpCodeOperand.InlineField << 8)
-			| (EmitMethod.Emit_FieldInfo << 13),
+		Stsfld = OpCodeOperand.InlineField
+			| (EmitMethod.Emit_FieldInfo << 5),
 		#endregion
 		#region InlineI
 
 		/// <summary>
 		/// ldc.i4
 		/// </summary>
-		Ldc_I4 = SimpleOpCode.Ldc_I4
-			| (OpCodeOperand.InlineI << 8)
-			| (EmitMethod.Emit_Int32 << 13),
+		Ldc_I4 = OpCodeOperand.InlineI
+			| (EmitMethod.Emit_Int32 << 5),
 		#endregion
 		#region InlineI8
 
 		/// <summary>
 		/// ldc.i8
 		/// </summary>
-		Ldc_I8 = SimpleOpCode.Ldc_I8
-			| (OpCodeOperand.InlineI8 << 8)
-			| (EmitMethod.Emit_Int64 << 13),
+		Ldc_I8 = OpCodeOperand.InlineI8
+			| (EmitMethod.Emit_Int64 << 5),
 		#endregion
 		#region InlineMethod
 
 		/// <summary>
 		/// call
 		/// </summary>
-		Call = SimpleOpCode.Call
-			| (OpCodeOperand.InlineMethod << 8)
-			| (EmitMethod.EmitCall << 13)
-			| (EmitMethod.Emit_MethodInfo << 13)
-			| (EmitMethod.Emit_ConstructorInfo << 13),
+		Call = OpCodeOperand.InlineMethod
+			| (EmitMethod.EmitCall << 5)
+			| (EmitMethod.Emit_MethodInfo << 5)
+			| (EmitMethod.Emit_ConstructorInfo << 5),
 
 		/// <summary>
 		/// callvirt
 		/// </summary>
-		Callvirt = SimpleOpCode.Callvirt
-			| (OpCodeOperand.InlineMethod << 8)
-			| (EmitMethod.EmitCall << 13)
-			| (EmitMethod.Emit_MethodInfo << 13),
+		Callvirt = OpCodeOperand.InlineMethod
+			| (EmitMethod.EmitCall << 5)
+			| (EmitMethod.Emit_MethodInfo << 5),
 
 		/// <summary>
 		/// jmp
 		/// </summary>
-		Jmp = SimpleOpCode.Jmp
-			| (OpCodeOperand.InlineMethod << 8)
-			| (EmitMethod.Emit_MethodInfo << 13),
+		Jmp = OpCodeOperand.InlineMethod
+			| (EmitMethod.Emit_MethodInfo << 5),
 
 		/// <summary>
 		/// ldftn
 		/// </summary>
-		Ldftn = SimpleOpCode.Ldftn
-			| (OpCodeOperand.InlineMethod << 8)
-			| (EmitMethod.Emit_MethodInfo << 13),
+		Ldftn = OpCodeOperand.InlineMethod
+			| (EmitMethod.Emit_MethodInfo << 5),
 
 		/// <summary>
 		/// ldvirtftn
 		/// </summary>
-		Ldvirtftn = SimpleOpCode.Ldvirtftn
-			| (OpCodeOperand.InlineMethod << 8)
-			| (EmitMethod.Emit_MethodInfo << 13),
+		Ldvirtftn = OpCodeOperand.InlineMethod
+			| (EmitMethod.Emit_MethodInfo << 5),
 
 		/// <summary>
 		/// newobj
 		/// </summary>
-		Newobj = SimpleOpCode.Newobj
-			| (OpCodeOperand.InlineMethod << 8)
-			| (EmitMethod.Emit_ConstructorInfo << 13),
+		Newobj = OpCodeOperand.InlineMethod
+			| (EmitMethod.Emit_ConstructorInfo << 5),
 		#endregion
 		#region InlineNone
 
 		/// <summary>
 		/// add
 		/// </summary>
-		Add = SimpleOpCode.Add
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Add = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// add.ovf
 		/// </summary>
-		Add_Ovf = SimpleOpCode.Add_Ovf
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Add_Ovf = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// add.ovf.un
 		/// </summary>
-		Add_Ovf_Un = SimpleOpCode.Add_Ovf_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Add_Ovf_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// and
 		/// </summary>
-		And = SimpleOpCode.And
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		And = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// arglist
 		/// </summary>
-		Arglist = SimpleOpCode.Arglist
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Arglist = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// break
 		/// </summary>
-		Break = SimpleOpCode.Break
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Break = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ceq
 		/// </summary>
-		Ceq = SimpleOpCode.Ceq
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ceq = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// cgt
 		/// </summary>
-		Cgt = SimpleOpCode.Cgt
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Cgt = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// cgt.un
 		/// </summary>
-		Cgt_Un = SimpleOpCode.Cgt_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Cgt_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ckfinite
 		/// </summary>
-		Ckfinite = SimpleOpCode.Ckfinite
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ckfinite = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// clt
 		/// </summary>
-		Clt = SimpleOpCode.Clt
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Clt = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// clt.un
 		/// </summary>
-		Clt_Un = SimpleOpCode.Clt_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Clt_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.i
 		/// </summary>
-		Conv_I = SimpleOpCode.Conv_I
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_I = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.i1
 		/// </summary>
-		Conv_I1 = SimpleOpCode.Conv_I1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_I1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.i2
 		/// </summary>
-		Conv_I2 = SimpleOpCode.Conv_I2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_I2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.i4
 		/// </summary>
-		Conv_I4 = SimpleOpCode.Conv_I4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_I4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.i8
 		/// </summary>
-		Conv_I8 = SimpleOpCode.Conv_I8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_I8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i
 		/// </summary>
-		Conv_Ovf_I = SimpleOpCode.Conv_Ovf_I
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i.un
 		/// </summary>
-		Conv_Ovf_I_Un = SimpleOpCode.Conv_Ovf_I_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i1
 		/// </summary>
-		Conv_Ovf_I1 = SimpleOpCode.Conv_Ovf_I1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i1.un
 		/// </summary>
-		Conv_Ovf_I1_Un = SimpleOpCode.Conv_Ovf_I1_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I1_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i2
 		/// </summary>
-		Conv_Ovf_I2 = SimpleOpCode.Conv_Ovf_I2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i2.un
 		/// </summary>
-		Conv_Ovf_I2_Un = SimpleOpCode.Conv_Ovf_I2_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I2_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i4
 		/// </summary>
-		Conv_Ovf_I4 = SimpleOpCode.Conv_Ovf_I4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i4.un
 		/// </summary>
-		Conv_Ovf_I4_Un = SimpleOpCode.Conv_Ovf_I4_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I4_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i8
 		/// </summary>
-		Conv_Ovf_I8 = SimpleOpCode.Conv_Ovf_I8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.i8.un
 		/// </summary>
-		Conv_Ovf_I8_Un = SimpleOpCode.Conv_Ovf_I8_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_I8_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u
 		/// </summary>
-		Conv_Ovf_U = SimpleOpCode.Conv_Ovf_U
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u.un
 		/// </summary>
-		Conv_Ovf_U_Un = SimpleOpCode.Conv_Ovf_U_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u1
 		/// </summary>
-		Conv_Ovf_U1 = SimpleOpCode.Conv_Ovf_U1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u1.un
 		/// </summary>
-		Conv_Ovf_U1_Un = SimpleOpCode.Conv_Ovf_U1_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U1_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u2
 		/// </summary>
-		Conv_Ovf_U2 = SimpleOpCode.Conv_Ovf_U2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u2.un
 		/// </summary>
-		Conv_Ovf_U2_Un = SimpleOpCode.Conv_Ovf_U2_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U2_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u4
 		/// </summary>
-		Conv_Ovf_U4 = SimpleOpCode.Conv_Ovf_U4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u4.un
 		/// </summary>
-		Conv_Ovf_U4_Un = SimpleOpCode.Conv_Ovf_U4_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U4_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u8
 		/// </summary>
-		Conv_Ovf_U8 = SimpleOpCode.Conv_Ovf_U8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.ovf.u8.un
 		/// </summary>
-		Conv_Ovf_U8_Un = SimpleOpCode.Conv_Ovf_U8_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_Ovf_U8_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.r.un
 		/// </summary>
-		Conv_R_Un = SimpleOpCode.Conv_R_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_R_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.r4
 		/// </summary>
-		Conv_R4 = SimpleOpCode.Conv_R4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_R4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.r8
 		/// </summary>
-		Conv_R8 = SimpleOpCode.Conv_R8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_R8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.u
 		/// </summary>
-		Conv_U = SimpleOpCode.Conv_U
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_U = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.u1
 		/// </summary>
-		Conv_U1 = SimpleOpCode.Conv_U1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_U1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.u2
 		/// </summary>
-		Conv_U2 = SimpleOpCode.Conv_U2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_U2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.u4
 		/// </summary>
-		Conv_U4 = SimpleOpCode.Conv_U4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_U4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// conv.u8
 		/// </summary>
-		Conv_U8 = SimpleOpCode.Conv_U8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Conv_U8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// cpblk
 		/// </summary>
-		Cpblk = SimpleOpCode.Cpblk
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Cpblk = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// div
 		/// </summary>
-		Div = SimpleOpCode.Div
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Div = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// div.un
 		/// </summary>
-		Div_Un = SimpleOpCode.Div_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Div_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// dup
 		/// </summary>
-		Dup = SimpleOpCode.Dup
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Dup = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// endfilter
 		/// </summary>
-		Endfilter = SimpleOpCode.Endfilter
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Endfilter = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// endfinally
 		/// </summary>
-		Endfinally = SimpleOpCode.Endfinally
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Endfinally = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// initblk
 		/// </summary>
-		Initblk = SimpleOpCode.Initblk
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Initblk = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldarg.0
 		/// </summary>
-		Ldarg_0 = SimpleOpCode.Ldarg_0
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldarg_0 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldarg.1
 		/// </summary>
-		Ldarg_1 = SimpleOpCode.Ldarg_1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldarg_1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldarg.2
 		/// </summary>
-		Ldarg_2 = SimpleOpCode.Ldarg_2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldarg_2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldarg.3
 		/// </summary>
-		Ldarg_3 = SimpleOpCode.Ldarg_3
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldarg_3 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.0
 		/// </summary>
-		Ldc_I4_0 = SimpleOpCode.Ldc_I4_0
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_0 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.1
 		/// </summary>
-		Ldc_I4_1 = SimpleOpCode.Ldc_I4_1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.2
 		/// </summary>
-		Ldc_I4_2 = SimpleOpCode.Ldc_I4_2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.3
 		/// </summary>
-		Ldc_I4_3 = SimpleOpCode.Ldc_I4_3
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_3 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.4
 		/// </summary>
-		Ldc_I4_4 = SimpleOpCode.Ldc_I4_4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.5
 		/// </summary>
-		Ldc_I4_5 = SimpleOpCode.Ldc_I4_5
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_5 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.6
 		/// </summary>
-		Ldc_I4_6 = SimpleOpCode.Ldc_I4_6
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_6 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.7
 		/// </summary>
-		Ldc_I4_7 = SimpleOpCode.Ldc_I4_7
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_7 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.8
 		/// </summary>
-		Ldc_I4_8 = SimpleOpCode.Ldc_I4_8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldc.i4.m1
 		/// </summary>
-		Ldc_I4_M1 = SimpleOpCode.Ldc_I4_M1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldc_I4_M1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.i
 		/// </summary>
-		Ldelem_I = SimpleOpCode.Ldelem_I
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_I = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.i1
 		/// </summary>
-		Ldelem_I1 = SimpleOpCode.Ldelem_I1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_I1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.i2
 		/// </summary>
-		Ldelem_I2 = SimpleOpCode.Ldelem_I2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_I2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.i4
 		/// </summary>
-		Ldelem_I4 = SimpleOpCode.Ldelem_I4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_I4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.i8
 		/// </summary>
-		Ldelem_I8 = SimpleOpCode.Ldelem_I8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_I8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.r4
 		/// </summary>
-		Ldelem_R4 = SimpleOpCode.Ldelem_R4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_R4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.r8
 		/// </summary>
-		Ldelem_R8 = SimpleOpCode.Ldelem_R8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_R8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.ref
 		/// </summary>
-		Ldelem_Ref = SimpleOpCode.Ldelem_Ref
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_Ref = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.u1
 		/// </summary>
-		Ldelem_U1 = SimpleOpCode.Ldelem_U1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_U1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.u2
 		/// </summary>
-		Ldelem_U2 = SimpleOpCode.Ldelem_U2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_U2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldelem.u4
 		/// </summary>
-		Ldelem_U4 = SimpleOpCode.Ldelem_U4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldelem_U4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.i
 		/// </summary>
-		Ldind_I = SimpleOpCode.Ldind_I
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_I = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.i1
 		/// </summary>
-		Ldind_I1 = SimpleOpCode.Ldind_I1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_I1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.i2
 		/// </summary>
-		Ldind_I2 = SimpleOpCode.Ldind_I2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_I2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.i4
 		/// </summary>
-		Ldind_I4 = SimpleOpCode.Ldind_I4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_I4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.i8
 		/// </summary>
-		Ldind_I8 = SimpleOpCode.Ldind_I8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_I8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.r4
 		/// </summary>
-		Ldind_R4 = SimpleOpCode.Ldind_R4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_R4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.r8
 		/// </summary>
-		Ldind_R8 = SimpleOpCode.Ldind_R8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_R8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.ref
 		/// </summary>
-		Ldind_Ref = SimpleOpCode.Ldind_Ref
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_Ref = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.u1
 		/// </summary>
-		Ldind_U1 = SimpleOpCode.Ldind_U1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_U1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.u2
 		/// </summary>
-		Ldind_U2 = SimpleOpCode.Ldind_U2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_U2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldind.u4
 		/// </summary>
-		Ldind_U4 = SimpleOpCode.Ldind_U4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldind_U4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldlen
 		/// </summary>
-		Ldlen = SimpleOpCode.Ldlen
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldlen = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldloc.0
 		/// </summary>
-		Ldloc_0 = SimpleOpCode.Ldloc_0
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldloc_0 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldloc.1
 		/// </summary>
-		Ldloc_1 = SimpleOpCode.Ldloc_1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldloc_1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldloc.2
 		/// </summary>
-		Ldloc_2 = SimpleOpCode.Ldloc_2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldloc_2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldloc.3
 		/// </summary>
-		Ldloc_3 = SimpleOpCode.Ldloc_3
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldloc_3 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ldnull
 		/// </summary>
-		Ldnull = SimpleOpCode.Ldnull
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ldnull = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// localloc
 		/// </summary>
-		Localloc = SimpleOpCode.Localloc
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Localloc = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// mul
 		/// </summary>
-		Mul = SimpleOpCode.Mul
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Mul = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// mul.ovf
 		/// </summary>
-		Mul_Ovf = SimpleOpCode.Mul_Ovf
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Mul_Ovf = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// mul.ovf.un
 		/// </summary>
-		Mul_Ovf_Un = SimpleOpCode.Mul_Ovf_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Mul_Ovf_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// neg
 		/// </summary>
-		Neg = SimpleOpCode.Neg
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Neg = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// nop
 		/// </summary>
-		Nop = SimpleOpCode.Nop
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Nop = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// not
 		/// </summary>
-		Not = SimpleOpCode.Not
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Not = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// or
 		/// </summary>
-		Or = SimpleOpCode.Or
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Or = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// pop
 		/// </summary>
-		Pop = SimpleOpCode.Pop
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Pop = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// readonly.
 		/// </summary>
-		Readonly = SimpleOpCode.Readonly
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Readonly = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// refanytype
 		/// </summary>
-		Refanytype = SimpleOpCode.Refanytype
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Refanytype = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// rem
 		/// </summary>
-		Rem = SimpleOpCode.Rem
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Rem = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// rem.un
 		/// </summary>
-		Rem_Un = SimpleOpCode.Rem_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Rem_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// ret
 		/// </summary>
-		Ret = SimpleOpCode.Ret
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Ret = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// rethrow
 		/// </summary>
-		Rethrow = SimpleOpCode.Rethrow
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Rethrow = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// shl
 		/// </summary>
-		Shl = SimpleOpCode.Shl
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Shl = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// shr
 		/// </summary>
-		Shr = SimpleOpCode.Shr
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Shr = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// shr.un
 		/// </summary>
-		Shr_Un = SimpleOpCode.Shr_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Shr_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.i
 		/// </summary>
-		Stelem_I = SimpleOpCode.Stelem_I
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_I = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.i1
 		/// </summary>
-		Stelem_I1 = SimpleOpCode.Stelem_I1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_I1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.i2
 		/// </summary>
-		Stelem_I2 = SimpleOpCode.Stelem_I2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_I2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.i4
 		/// </summary>
-		Stelem_I4 = SimpleOpCode.Stelem_I4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_I4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.i8
 		/// </summary>
-		Stelem_I8 = SimpleOpCode.Stelem_I8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_I8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.r4
 		/// </summary>
-		Stelem_R4 = SimpleOpCode.Stelem_R4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_R4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.r8
 		/// </summary>
-		Stelem_R8 = SimpleOpCode.Stelem_R8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_R8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stelem.ref
 		/// </summary>
-		Stelem_Ref = SimpleOpCode.Stelem_Ref
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stelem_Ref = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.i
 		/// </summary>
-		Stind_I = SimpleOpCode.Stind_I
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_I = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.i1
 		/// </summary>
-		Stind_I1 = SimpleOpCode.Stind_I1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_I1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.i2
 		/// </summary>
-		Stind_I2 = SimpleOpCode.Stind_I2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_I2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.i4
 		/// </summary>
-		Stind_I4 = SimpleOpCode.Stind_I4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_I4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.i8
 		/// </summary>
-		Stind_I8 = SimpleOpCode.Stind_I8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_I8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.r4
 		/// </summary>
-		Stind_R4 = SimpleOpCode.Stind_R4
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_R4 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.r8
 		/// </summary>
-		Stind_R8 = SimpleOpCode.Stind_R8
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_R8 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stind.ref
 		/// </summary>
-		Stind_Ref = SimpleOpCode.Stind_Ref
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stind_Ref = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stloc.0
 		/// </summary>
-		Stloc_0 = SimpleOpCode.Stloc_0
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stloc_0 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stloc.1
 		/// </summary>
-		Stloc_1 = SimpleOpCode.Stloc_1
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stloc_1 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stloc.2
 		/// </summary>
-		Stloc_2 = SimpleOpCode.Stloc_2
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stloc_2 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// stloc.3
 		/// </summary>
-		Stloc_3 = SimpleOpCode.Stloc_3
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Stloc_3 = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// sub
 		/// </summary>
-		Sub = SimpleOpCode.Sub
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Sub = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// sub.ovf
 		/// </summary>
-		Sub_Ovf = SimpleOpCode.Sub_Ovf
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Sub_Ovf = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// sub.ovf.un
 		/// </summary>
-		Sub_Ovf_Un = SimpleOpCode.Sub_Ovf_Un
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Sub_Ovf_Un = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// tail.
 		/// </summary>
-		Tailcall = SimpleOpCode.Tailcall
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Tailcall = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// throw
 		/// </summary>
-		Throw = SimpleOpCode.Throw
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Throw = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// volatile.
 		/// </summary>
-		Volatile = SimpleOpCode.Volatile
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Volatile = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 
 		/// <summary>
 		/// xor
 		/// </summary>
-		Xor = SimpleOpCode.Xor
-			| (OpCodeOperand.InlineNone << 8)
-			| (EmitMethod.Emit << 13),
+		Xor = OpCodeOperand.InlineNone
+			| (EmitMethod.Emit << 5),
 		#endregion
 		#region InlineR
 
 		/// <summary>
 		/// ldc.r8
 		/// </summary>
-		Ldc_R8 = SimpleOpCode.Ldc_R8
-			| (OpCodeOperand.InlineR << 8)
-			| (EmitMethod.Emit_Double << 13),
+		Ldc_R8 = OpCodeOperand.InlineR
+			| (EmitMethod.Emit_Double << 5),
 		#endregion
 		#region InlineSig
 
 		/// <summary>
 		/// calli
 		/// </summary>
-		Calli = SimpleOpCode.Calli
-			| (OpCodeOperand.InlineSig << 8)
-			| (EmitMethod.EmitCalli << 13)
-			| (EmitMethod.Emit_SignatureHelper << 13),
+		Calli = OpCodeOperand.InlineSig
+			| (EmitMethod.EmitCalli << 5)
+			| (EmitMethod.Emit_SignatureHelper << 5),
 		#endregion
 		#region InlineString
 
 		/// <summary>
 		/// ldstr
 		/// </summary>
-		Ldstr = SimpleOpCode.Ldstr
-			| (OpCodeOperand.InlineString << 8)
-			| (EmitMethod.Emit_String << 13),
+		Ldstr = OpCodeOperand.InlineString
+			| (EmitMethod.Emit_String << 5),
 		#endregion
 		#region InlineSwitch
 
 		/// <summary>
 		/// switch
 		/// </summary>
-		Switch = SimpleOpCode.Switch
-			| (OpCodeOperand.InlineSwitch << 8)
-			| (EmitMethod.Emit_LabelArray << 13),
+		Switch = OpCodeOperand.InlineSwitch
+			| (EmitMethod.Emit_LabelArray << 5),
 		#endregion
 		#region InlineTok
 
 		/// <summary>
 		/// ldtoken
 		/// </summary>
-		Ldtoken = SimpleOpCode.Ldtoken
-			| (OpCodeOperand.InlineTok << 8)
-			| (EmitMethod.Emit_Type << 13)
-			| (EmitMethod.Emit_FieldInfo << 13)
-			| (EmitMethod.Emit_MethodInfo << 13),
+		Ldtoken = OpCodeOperand.InlineTok
+			| (EmitMethod.Emit_Type << 5)
+			| (EmitMethod.Emit_FieldInfo << 5)
+			| (EmitMethod.Emit_MethodInfo << 5),
 		#endregion
 		#region InlineType
 
 		/// <summary>
 		/// box
 		/// </summary>
-		Box = SimpleOpCode.Box
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Box = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// castclass
 		/// </summary>
-		Castclass = SimpleOpCode.Castclass
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Castclass = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// constrained.
 		/// </summary>
-		Constrained = SimpleOpCode.Constrained
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Constrained = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// cpobj
 		/// </summary>
-		Cpobj = SimpleOpCode.Cpobj
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Cpobj = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// initobj
 		/// </summary>
-		Initobj = SimpleOpCode.Initobj
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Initobj = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// isinst
 		/// </summary>
-		Isinst = SimpleOpCode.Isinst
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Isinst = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// ldelem
 		/// </summary>
-		Ldelem = SimpleOpCode.Ldelem
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Ldelem = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// ldelema
 		/// </summary>
-		Ldelema = SimpleOpCode.Ldelema
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Ldelema = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// ldobj
 		/// </summary>
-		Ldobj = SimpleOpCode.Ldobj
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Ldobj = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// mkrefany
 		/// </summary>
-		Mkrefany = SimpleOpCode.Mkrefany
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Mkrefany = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// newarr
 		/// </summary>
-		Newarr = SimpleOpCode.Newarr
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Newarr = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// refanyval
 		/// </summary>
-		Refanyval = SimpleOpCode.Refanyval
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Refanyval = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// sizeof
 		/// </summary>
-		Sizeof = SimpleOpCode.Sizeof
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Sizeof = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// stelem
 		/// </summary>
-		Stelem = SimpleOpCode.Stelem
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Stelem = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// stobj
 		/// </summary>
-		Stobj = SimpleOpCode.Stobj
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Stobj = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// unbox
 		/// </summary>
-		Unbox = SimpleOpCode.Unbox
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Unbox = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 
 		/// <summary>
 		/// unbox.any
 		/// </summary>
-		Unbox_Any = SimpleOpCode.Unbox_Any
-			| (OpCodeOperand.InlineType << 8)
-			| (EmitMethod.Emit_Type << 13),
+		Unbox_Any = OpCodeOperand.InlineType
+			| (EmitMethod.Emit_Type << 5),
 		#endregion
 		#region InlineVar
 
 		/// <summary>
 		/// ldarg
 		/// </summary>
-		Ldarg = SimpleOpCode.Ldarg
-			| (OpCodeOperand.InlineVar << 8)
-			| (EmitMethod.Emit_Int16 << 13),
+		Ldarg = OpCodeOperand.InlineVar
+			| (EmitMethod.Emit_Int16 << 5),
 
 		/// <summary>
 		/// ldarga
 		/// </summary>
-		Ldarga = SimpleOpCode.Ldarga
-			| (OpCodeOperand.InlineVar << 8)
-			| (EmitMethod.Emit_Int16 << 13),
+		Ldarga = OpCodeOperand.InlineVar
+			| (EmitMethod.Emit_Int16 << 5),
 
 		/// <summary>
 		/// ldloc
 		/// </summary>
-		Ldloc = SimpleOpCode.Ldloc
-			| (OpCodeOperand.InlineVar << 8)
-			| (EmitMethod.Emit_Int16 << 13)
-			| (EmitMethod.Emit_LocalBuilder << 13),
+		Ldloc = OpCodeOperand.InlineVar
+			| (EmitMethod.Emit_Int16 << 5)
+			| (EmitMethod.Emit_LocalBuilder << 5),
 
 		/// <summary>
 		/// ldloca
 		/// </summary>
-		Ldloca = SimpleOpCode.Ldloca
-			| (OpCodeOperand.InlineVar << 8)
-			| (EmitMethod.Emit_Int16 << 13)
-			| (EmitMethod.Emit_LocalBuilder << 13),
+		Ldloca = OpCodeOperand.InlineVar
+			| (EmitMethod.Emit_Int16 << 5)
+			| (EmitMethod.Emit_LocalBuilder << 5),
 
 		/// <summary>
 		/// starg
 		/// </summary>
-		Starg = SimpleOpCode.Starg
-			| (OpCodeOperand.InlineVar << 8)
-			| (EmitMethod.Emit_Int16 << 13),
+		Starg = OpCodeOperand.InlineVar
+			| (EmitMethod.Emit_Int16 << 5),
 
 		/// <summary>
 		/// stloc
 		/// </summary>
-		Stloc = SimpleOpCode.Stloc
-			| (OpCodeOperand.InlineVar << 8)
-			| (EmitMethod.Emit_Int16 << 13)
-			| (EmitMethod.Emit_LocalBuilder << 13),
+		Stloc = OpCodeOperand.InlineVar
+			| (EmitMethod.Emit_Int16 << 5)
+			| (EmitMethod.Emit_LocalBuilder << 5),
 		#endregion
 		#region ShortInlineBrTarget
 
 		/// <summary>
 		/// beq.s
 		/// </summary>
-		Beq_S = SimpleOpCode.Beq_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Beq_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bge.s
 		/// </summary>
-		Bge_S = SimpleOpCode.Bge_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bge_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bge.un.s
 		/// </summary>
-		Bge_Un_S = SimpleOpCode.Bge_Un_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bge_Un_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bgt.s
 		/// </summary>
-		Bgt_S = SimpleOpCode.Bgt_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bgt_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bgt.un.s
 		/// </summary>
-		Bgt_Un_S = SimpleOpCode.Bgt_Un_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bgt_Un_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// ble.s
 		/// </summary>
-		Ble_S = SimpleOpCode.Ble_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Ble_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// ble.un.s
 		/// </summary>
-		Ble_Un_S = SimpleOpCode.Ble_Un_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Ble_Un_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// blt.s
 		/// </summary>
-		Blt_S = SimpleOpCode.Blt_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Blt_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// blt.un.s
 		/// </summary>
-		Blt_Un_S = SimpleOpCode.Blt_Un_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Blt_Un_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// bne.un.s
 		/// </summary>
-		Bne_Un_S = SimpleOpCode.Bne_Un_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Bne_Un_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// br.s
 		/// </summary>
-		Br_S = SimpleOpCode.Br_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Br_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// brfalse.s
 		/// </summary>
-		Brfalse_S = SimpleOpCode.Brfalse_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Brfalse_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// brtrue.s
 		/// </summary>
-		Brtrue_S = SimpleOpCode.Brtrue_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Brtrue_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 
 		/// <summary>
 		/// leave.s
 		/// </summary>
-		Leave_S = SimpleOpCode.Leave_S
-			| (OpCodeOperand.ShortInlineBrTarget << 8)
-			| (EmitMethod.Emit_Label << 13),
+		Leave_S = OpCodeOperand.ShortInlineBrTarget
+			| (EmitMethod.Emit_Label << 5),
 		#endregion
 		#region ShortInlineI
 
 		/// <summary>
 		/// ldc.i4.s
 		/// </summary>
-		Ldc_I4_S = SimpleOpCode.Ldc_I4_S
-			| (OpCodeOperand.ShortInlineI << 8)
-			| (EmitMethod.Emit_SByte << 13),
+		Ldc_I4_S = OpCodeOperand.ShortInlineI
+			| (EmitMethod.Emit_SByte << 5),
 
 		/// <summary>
 		/// unaligned.
 		/// </summary>
-		Unaligned = SimpleOpCode.Unaligned
-			| (OpCodeOperand.ShortInlineI << 8)
-			| (EmitMethod.Emit_SByte << 13),
+		Unaligned = OpCodeOperand.ShortInlineI
+			| (EmitMethod.Emit_SByte << 5),
 		#endregion
 		#region ShortInlineR
 
 		/// <summary>
 		/// ldc.r4
 		/// </summary>
-		Ldc_R4 = SimpleOpCode.Ldc_R4
-			| (OpCodeOperand.ShortInlineR << 8)
-			| (EmitMethod.Emit_Single << 13),
+		Ldc_R4 = OpCodeOperand.ShortInlineR
+			| (EmitMethod.Emit_Single << 5),
 		#endregion
 		#region ShortInlineVar
 
 		/// <summary>
 		/// ldarg.s
 		/// </summary>
-		Ldarg_S = SimpleOpCode.Ldarg_S
-			| (OpCodeOperand.ShortInlineVar << 8)
-			| (EmitMethod.Emit_Byte << 13),
+		Ldarg_S = OpCodeOperand.ShortInlineVar
+			| (EmitMethod.Emit_Byte << 5),
 
 		/// <summary>
 		/// ldarga.s
 		/// </summary>
-		Ldarga_S = SimpleOpCode.Ldarga_S
-			| (OpCodeOperand.ShortInlineVar << 8)
-			| (EmitMethod.Emit_Byte << 13),
+		Ldarga_S = OpCodeOperand.ShortInlineVar
+			| (EmitMethod.Emit_Byte << 5),
 
 		/// <summary>
 		/// ldloc.s
 		/// </summary>
-		Ldloc_S = SimpleOpCode.Ldloc_S
-			| (OpCodeOperand.ShortInlineVar << 8)
-			| (EmitMethod.Emit_Byte << 13)
-			| (EmitMethod.Emit_LocalBuilder << 13),
+		Ldloc_S = OpCodeOperand.ShortInlineVar
+			| (EmitMethod.Emit_Byte << 5)
+			| (EmitMethod.Emit_LocalBuilder << 5),
 
 		/// <summary>
 		/// ldloca.s
 		/// </summary>
-		Ldloca_S = SimpleOpCode.Ldloca_S
-			| (OpCodeOperand.ShortInlineVar << 8)
-			| (EmitMethod.Emit_Byte << 13)
-			| (EmitMethod.Emit_LocalBuilder << 13),
+		Ldloca_S = OpCodeOperand.ShortInlineVar
+			| (EmitMethod.Emit_Byte << 5)
+			| (EmitMethod.Emit_LocalBuilder << 5),
 
 		/// <summary>
 		/// starg.s
 		/// </summary>
-		Starg_S = SimpleOpCode.Starg_S
-			| (OpCodeOperand.ShortInlineVar << 8)
-			| (EmitMethod.Emit_Byte << 13),
+		Starg_S = OpCodeOperand.ShortInlineVar
+			| (EmitMethod.Emit_Byte << 5),
 
 		/// <summary>
 		/// stloc.s
 		/// </summary>
-		Stloc_S = SimpleOpCode.Stloc_S
-			| (OpCodeOperand.ShortInlineVar << 8)
-			| (EmitMethod.Emit_Byte << 13)
-			| (EmitMethod.Emit_LocalBuilder << 13),
+		Stloc_S = OpCodeOperand.ShortInlineVar
+			| (EmitMethod.Emit_Byte << 5)
+			| (EmitMethod.Emit_LocalBuilder << 5),
 		#endregion
 	}
 
 	static partial class EmitMatrix
 	{
-		[GeneratedCode("EmitMatrix", "1.0")]
-		public static SimpleOpCode GetSimpleOpCode(this OpCode opCode) => (SimpleOpCode)((int)opCode & 0xFF);
-		[GeneratedCode("EmitMatrix", "1.0")]
-		public static OpCodeOperand GetOperand(this OpCode opCode) => (OpCodeOperand)((int)opCode >> 8 & 0x1F);
-		[GeneratedCode("EmitMatrix", "1.0")]
-		public static EmitMethod GetSupportedMethods(this OpCode opCode) => (EmitMethod)((int)opCode >> 13 & 0x7FFFF);
+		public static OpCodeOperand GetOperand(this OpCode opCode) => (OpCodeOperand)((int)opCode & 0x1F);
+		public static EmitMethod GetSupportedMethods(this OpCode opCode) => (EmitMethod)((int)opCode >> 5 & 0x7FFFF);
 
-		[GeneratedCode("EmitMatrix", "1.0")]
 		public static OpCode GetOpCode(IFieldSymbol field)
 		{
 			if (field.ContainingType.IsMatch("System.Reflection.Emit.OpCodes"))
@@ -2782,7 +1425,6 @@ namespace WTG.Analyzers
 			return OpCode.Invalid;
 		}
 
-		[GeneratedCode("EmitMatrix", "1.0")]
 		public static OpCode GetOpCode(string field)
 		{
 			switch (field)

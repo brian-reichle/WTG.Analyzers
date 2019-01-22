@@ -40,18 +40,15 @@ var allMethodsNames = methodOverride
 	.OrderBy(x => x)
 	.ToArray();
 
-var opCodeBits = RequiredBits(fields.Length);
 var opCodeOperandBits = RequiredBits(fieldsByOperand.Length);
 var methodBits = allMethodsNames.Length;
 #>
 using System;
-using System.CodeDom.Compiler;
 using Microsoft.CodeAnalysis;
 using WTG.Analyzers.Utils;
 
 namespace WTG.Analyzers
 {
-	[GeneratedCode("EmitMatrix", "1.0")]
 	enum OpCodeOperand
 	{
 		Invalid = 0,
@@ -67,37 +64,7 @@ foreach (var fieldGroup in fieldsByOperand)
 #>
 	}
 
-	[GeneratedCode("EmitMatrix", "1.0")]
-	enum SimpleOpCode
-	{
-		Invalid = 0,
-<#
-index = 0;
-
-foreach (var fieldGroup in fieldsByOperand)
-{
-#>
-		#region <#=fieldGroup.Key#>
-<#
-	foreach (var field in fieldGroup.Fields)
-	{
-#>
-
-		/// <summary>
-		/// <#=field.Mnumonic#>
-		/// </summary>
-		<#=field.Name#> = <#=++index#>,
-<#
-	}
-#>
-		#endregion
-<#
-}
-#>
-	}
-
 	[Flags]
-	[GeneratedCode("EmitMatrix", "1.0")]
 	enum EmitMethod
 	{
 		None = 0,
@@ -116,7 +83,6 @@ foreach (var fieldGroup in fieldsByOperand)
 #>
 	}
 
-	[GeneratedCode("EmitMatrix", "1.0")]
 	enum OpCode
 	{
 		Invalid = 0,
@@ -133,13 +99,12 @@ foreach (var fieldGroup in fieldsByOperand)
 		/// <summary>
 		/// <#=field.Mnumonic#>
 		/// </summary>
-		<#=field.Name#> = SimpleOpCode.<#=field.Name#>
-			| (OpCodeOperand.<#=field.OperandType#> << <#=opCodeBits#>)<#
+		<#=field.Name#> = OpCodeOperand.<#=field.OperandType#><#
 		foreach (var methodName in field.MethodNames)
 		{
 			#>
 
-			| (EmitMethod.<#=methodName#> << <#=(opCodeBits + opCodeOperandBits)#>)<#
+			| (EmitMethod.<#=methodName#> << <#=opCodeOperandBits#>)<#
 		}
 			#>,
 <#
@@ -153,14 +118,9 @@ foreach (var fieldGroup in fieldsByOperand)
 
 	static partial class EmitMatrix
 	{
-		[GeneratedCode("EmitMatrix", "1.0")]
-		public static SimpleOpCode GetSimpleOpCode(this OpCode opCode) => (SimpleOpCode)((int)opCode & 0x<#=((1 << opCodeBits) - 1).ToString("X")#>);
-		[GeneratedCode("EmitMatrix", "1.0")]
-		public static OpCodeOperand GetOperand(this OpCode opCode) => (OpCodeOperand)((int)opCode >> <#=opCodeBits#> & 0x<#=((1 << opCodeOperandBits) - 1).ToString("X")#>);
-		[GeneratedCode("EmitMatrix", "1.0")]
-		public static EmitMethod GetSupportedMethods(this OpCode opCode) => (EmitMethod)((int)opCode >> <#=opCodeBits + opCodeOperandBits#> & 0x<#=((1 << methodBits) - 1).ToString("X")#>);
+		public static OpCodeOperand GetOperand(this OpCode opCode) => (OpCodeOperand)((int)opCode & 0x<#=((1 << opCodeOperandBits) - 1).ToString("X")#>);
+		public static EmitMethod GetSupportedMethods(this OpCode opCode) => (EmitMethod)((int)opCode >> <#=opCodeOperandBits#> & 0x<#=((1 << methodBits) - 1).ToString("X")#>);
 
-		[GeneratedCode("EmitMatrix", "1.0")]
 		public static OpCode GetOpCode(IFieldSymbol field)
 		{
 			if (field.ContainingType.IsMatch("System.Reflection.Emit.OpCodes"))
@@ -171,7 +131,6 @@ foreach (var fieldGroup in fieldsByOperand)
 			return OpCode.Invalid;
 		}
 
-		[GeneratedCode("EmitMatrix", "1.0")]
 		public static OpCode GetOpCode(string field)
 		{
 			switch (field)
